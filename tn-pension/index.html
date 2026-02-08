@@ -14,7 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap'); 
-        body { font-family: 'Mukta+Malar', sans-serif; }
+        body { font-family: 'Mukta Malar', sans-serif; }
         @media print {
             .no-print { display: none !important; }
             body { background: white; padding: 0; }
@@ -228,8 +228,8 @@
                 alert('சம்பளத்தை சரியாக உள்ளிடவும் (Please enter a valid salary)');
                 return;
             }
-            if (!cpsInput && cpsInput !== 0) {
-                alert('CPS சேமிப்பை உள்ளிடவும் (Please enter CPS savings)');
+            if (isNaN(cpsInput) || cpsInput < 0) {
+                alert('CPS சேமிப்பை சரியாக உள்ளிடவும் (Please enter a valid CPS balance)');
                 return;
             }
             if (joinYear < birthYear + 18) {
@@ -239,8 +239,19 @@
 
             const retireYear = birthYear + 60;
             const currentYear = new Date().getFullYear();
-            const yearsLeft = Math.max(0, retireYear - currentYear);
+
+            if (retireYear <= currentYear) {
+                alert('ஓய்வு ஆண்டு (' + retireYear + ') ஏற்கனவே கடந்துவிட்டது. (Retirement year ' + retireYear + ' has already passed.)');
+                return;
+            }
+
+            const yearsLeft = retireYear - currentYear;
             const totalService = retireYear - joinYear;
+
+            if (totalService <= 0) {
+                alert('பணியில் சேர்ந்த ஆண்டு ஓய்வு ஆண்டுக்கு (' + retireYear + ') முன்பு இருக்க வேண்டும் (Join year must be before retirement year)');
+                return;
+            }
             
             let salary = salaryInput;
             let corpus = cpsInput * 100000;
@@ -254,7 +265,8 @@
 
             let pFactor = totalService >= 25 ? 0.50 : (totalService / 25) * 0.50;
             const pension = salary * pFactor;
-            const gratuity = totalService >= 25 ? 25 : Math.round((totalService / 25) * 20);
+            const gratuityRaw = (salary * Math.min(totalService, 33)) / 2;
+            const gratuityInLakhs = Math.min(gratuityRaw / 100000, 25);
             const interest = (corpus * 0.07) / 12;
 
             const fmtInr = (n) => Math.round(n).toLocaleString('en-IN');
@@ -274,7 +286,7 @@
                 typeEl.className = "text-sm font-bold uppercase text-amber-600";
                 hintEl.innerText = totalService + " ஆண்டு பணி - விகிதாசார பென்ஷன்";
             }
-            document.getElementById('resGratuity').innerText = gratuity;
+            document.getElementById('resGratuity').innerText = gratuityInLakhs.toFixed(2);
             document.getElementById('resCorpus').innerText = fmtLg(corpus);
             document.getElementById('resInterest').innerText = fmtInr(interest);
             document.getElementById('resPension').innerText = fmtInr(pension);
@@ -286,8 +298,8 @@
         function shareWhatsApp() {
             const p = document.getElementById('resPension').innerText;
             const c = document.getElementById('resCorpus').innerText;
-            const text = `என் TN அரசு ஓய்வூதியம் கணக்கிட்டேன்!%0A💰 CPS மொத்தம்: ₹${c}%0A🏛️ மாத பென்ஷன்: ₹${p}%0A👉 நீங்களும் கணக்கிடுங்கள்: https://calc.venba.dev/tn-pension/`;
-            window.open(`https://wa.me/?text=${text}`, '_blank');
+            const text = `என் TN அரசு ஓய்வூதியம் கணக்கிட்டேன்!\n💰 CPS மொத்தம்: ₹${c}\n🏛️ மாத பென்ஷன்: ₹${p}\n👉 நீங்களும் கணக்கிடுங்கள்: https://calc.venba.dev/tn-pension/`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
     </script>
 
