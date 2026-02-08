@@ -39,11 +39,11 @@
     <main class="max-w-xl mx-auto mt-6 p-4 flex-1 pb-8">
         
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 no-print">
-            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b pb-2">விவரங்களை உள்ளிடவும் (Enter Details)</h2>
+            <h2 class="text-base font-bold text-slate-400 uppercase tracking-widest border-b pb-2">விவரங்களை உள்ளிடவும் (Enter Details)</h2>
             
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">பிறந்த ஆண்டு (Birth Year)</label>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">பிறந்த ஆண்டு (Birth Year)</label>
                     <div class="relative">
                         <select id="birthYear" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-lg appearance-none focus:ring-2 focus:ring-indigo-500">
                             </select>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">பணியில் சேர்ந்த ஆண்டு (Join Year)</label>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">பணியில் சேர்ந்த ஆண்டு (Join Year)</label>
                     <div class="relative">
                         <select id="joinYear" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-lg appearance-none focus:ring-2 focus:ring-indigo-500">
                             </select>
@@ -63,11 +63,11 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">தற்போதைய ஊதியம் + அகவிலைப்படி (Basic + DA)</label>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">தற்போதைய ஊதியம் + அகவிலைப்படி (Basic + DA)</label>
                     <input type="tel" id="salary" placeholder="எ.கா: 52298" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-xl font-black text-indigo-900 tracking-wide focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">தற்போதைய CPS சேமிப்பு (Current CPS Balance)</label>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">தற்போதைய CPS சேமிப்பு (Current CPS Balance)</label>
                     <input type="tel" id="cps" placeholder="எ.கா: 22.07" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-xl font-black text-indigo-900 tracking-wide focus:ring-2 focus:ring-indigo-500 outline-none">
                     <span class="text-[10px] text-slate-400 mt-1 block">லட்சத்தில் உள்ளிடவும் (Enter in Lakhs, e.g. 22.07)</span>
                 </div>
@@ -92,21 +92,21 @@
 
             <div class="grid grid-cols-2 gap-3 text-center">
                 <div class="bg-slate-50 p-3 rounded-2xl">
-                    <span class="block text-[9px] font-bold text-slate-400 uppercase">இறுதிச் சம்பளம் (Last Salary)</span>
-                    <span class="text-lg font-black text-slate-800">₹<span id="resLastSalary"></span></span>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase">இறுதிச் சம்பளம் (Last Salary)</span>
+                    <span class="text-xl font-black text-slate-800">₹<span id="resLastSalary"></span></span>
                 </div>
                 <div class="bg-slate-50 p-3 rounded-2xl">
-                    <span class="block text-[9px] font-bold text-slate-400 uppercase">பணிக்காலம் (Service)</span>
-                    <span class="text-lg font-black text-slate-800"><span id="resService"></span> ஆண்டுகள்</span>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase">பணிக்காலம் (Service)</span>
+                    <span class="text-xl font-black text-slate-800"><span id="resService"></span> ஆண்டுகள்</span>
                 </div>
                 <div class="bg-slate-50 p-3 rounded-2xl">
-                    <span class="block text-[9px] font-bold text-slate-400 uppercase">பென்ஷன் வகை (Pension Type)</span>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase">பென்ஷன் வகை (Pension Type)</span>
                     <span class="text-sm font-bold uppercase" id="resType">Full</span>
-                    <span class="block text-[8px] text-slate-400 mt-0.5" id="resTypeHint"></span>
+                    <span class="block text-[10px] text-slate-400 mt-0.5" id="resTypeHint"></span>
                 </div>
                 <div class="bg-slate-50 p-3 rounded-2xl">
-                    <span class="block text-[9px] font-bold text-slate-400 uppercase">கிராஜுவிட்டி (Gratuity)</span>
-                    <span class="text-lg font-black text-slate-800">₹<span id="resGratuity"></span> லட்சம்</span>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase">கிராஜுவிட்டி (Gratuity)</span>
+                    <span class="text-xl font-black text-slate-800">₹<span id="resGratuity"></span> லட்சம்</span>
                 </div>
             </div>
 
@@ -117,13 +117,13 @@
                     <h3 class="font-bold text-slate-700 text-sm uppercase">விருப்பம் A: மொத்தப் பணம் (Lump Sum)</h3>
                     
                     <div class="mt-2 flex justify-between items-baseline">
-                        <span class="text-3xl font-black text-red-600 tracking-tight">₹<span id="resCorpus"></span></span>
-                        <span class="text-[10px] text-slate-400 font-bold uppercase">மொத்தம்</span>
+                        <span class="text-4xl font-black text-red-600 tracking-tight">₹<span id="resCorpus"></span></span>
+                        <span class="text-xs text-slate-400 font-bold uppercase">மொத்தம்</span>
                     </div>
                     
-                    <div class="mt-3 pt-3 border-t border-red-50 flex justify-between text-xs text-slate-500">
+                    <div class="mt-3 pt-3 border-t border-red-50 flex justify-between text-sm text-slate-500">
                         <span>வட்டி வருமானம் (Interest @ 7%):</span>
-                        <span class="font-bold text-slate-700">₹<span id="resInterest"></span></span>
+                        <span class="font-bold text-slate-700">₹<span id="resInterest"></span>/மாதம்</span>
                     </div>
                 </div>
 
@@ -132,11 +132,11 @@
                     <h3 class="font-bold text-slate-700 text-sm uppercase">விருப்பம் B: மாத பென்ஷன் (Pension)</h3>
                     
                     <div class="mt-2 flex justify-between items-baseline">
-                        <span class="text-3xl font-black text-green-600 tracking-tight">₹<span id="resPension"></span></span>
-                        <span class="text-[10px] text-slate-400 font-bold uppercase">மாதம்</span>
+                        <span class="text-4xl font-black text-green-600 tracking-tight">₹<span id="resPension"></span></span>
+                        <span class="text-xs text-slate-400 font-bold uppercase">மாதம்</span>
                     </div>
 
-                    <div class="mt-3 pt-3 border-t border-green-50 text-[10px] text-green-700 font-medium flex gap-2 items-center">
+                    <div class="mt-3 pt-3 border-t border-green-50 text-xs text-green-700 font-medium flex gap-2 items-center">
                         <span class="bg-green-100 px-1.5 py-0.5 rounded text-green-800">சிறப்பு:</span>
                         <span>DA உயர்வு + வாழ்நாள் பென்ஷன் உண்டு.</span>
                     </div>
@@ -291,11 +291,11 @@
             const hintEl = document.getElementById('resTypeHint');
             if (totalService >= 25) {
                 typeEl.innerText = "முழு பென்ஷன் (50%)";
-                typeEl.className = "text-sm font-bold uppercase text-green-600";
+                typeEl.className = "text-base font-bold uppercase text-green-600";
                 hintEl.innerText = "25+ ஆண்டு பணி";
             } else {
                 typeEl.innerText = "விகிதாசார பென்ஷன்";
-                typeEl.className = "text-sm font-bold uppercase text-amber-600";
+                typeEl.className = "text-base font-bold uppercase text-amber-600";
                 hintEl.innerText = totalService + " ஆண்டு பணி";
             }
             document.getElementById('resGratuity').innerText = gratuityInLakhs.toFixed(2);
@@ -309,15 +309,15 @@
             const recoDetail = document.getElementById('recoDetail');
             if (pension > interest) {
                 recoEl.className = "rounded-2xl p-4 text-center border-2 mt-2 bg-green-50 border-green-200";
-                recoText.className = "text-sm font-black text-green-800";
+                recoText.className = "text-lg font-black text-green-800";
                 recoText.innerText = "✅ TAPS பென்ஷன் அதிக லாபம்!";
-                recoDetail.className = "text-[10px] mt-1 font-medium text-green-700";
+                recoDetail.className = "text-xs mt-1 font-medium text-green-700";
                 recoDetail.innerText = "TAPS மாத பென்ஷன் ₹" + fmtInr(pension) + " > CPS வட்டி ₹" + fmtInr(interest) + " — மாதம் ₹" + fmtInr(pension - interest) + " அதிகம்";
             } else {
                 recoEl.className = "rounded-2xl p-4 text-center border-2 mt-2 bg-red-50 border-red-200";
-                recoText.className = "text-sm font-black text-red-800";
+                recoText.className = "text-lg font-black text-red-800";
                 recoText.innerText = "💰 CPS மொத்தப் பணம் அதிக லாபம்!";
-                recoDetail.className = "text-[10px] mt-1 font-medium text-red-700";
+                recoDetail.className = "text-xs mt-1 font-medium text-red-700";
                 recoDetail.innerText = "CPS வட்டி ₹" + fmtInr(interest) + " > TAPS பென்ஷன் ₹" + fmtInr(pension) + " — மாதம் ₹" + fmtInr(interest - pension) + " அதிகம்";
             }
 
