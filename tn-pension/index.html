@@ -22,7 +22,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 pb-24">
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
 
     <nav class="bg-indigo-950 px-4 py-2 no-print">
         <a href="/" class="text-indigo-300 hover:text-white text-xs font-semibold transition-colors">&larr; All Calculators</a>
@@ -36,7 +36,7 @@
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-indigo-800 rounded-full opacity-50 z-0"></div>
     </header>
 
-    <main class="max-w-xl mx-auto mt-6 p-4">
+    <main class="max-w-xl mx-auto mt-6 p-4 flex-1 pb-8">
         
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 no-print">
             <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b pb-2">விவரங்களை உள்ளிடவும் (Enter Details)</h2>
@@ -100,8 +100,9 @@
                     <span class="text-lg font-black text-slate-800"><span id="resService"></span> ஆண்டுகள்</span>
                 </div>
                 <div class="bg-slate-50 p-3 rounded-2xl">
-                    <span class="block text-[9px] font-bold text-slate-400 uppercase">வகை (Type)</span>
-                    <span class="text-sm font-bold text-indigo-600 uppercase" id="resType">Full</span>
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">பென்ஷன் வகை (Pension Type)</span>
+                    <span class="text-sm font-bold uppercase" id="resType">Full</span>
+                    <span class="block text-[8px] text-slate-400 mt-0.5" id="resTypeHint"></span>
                 </div>
                 <div class="bg-slate-50 p-3 rounded-2xl">
                     <span class="block text-[9px] font-bold text-slate-400 uppercase">கிராஜுவிட்டி (Gratuity)</span>
@@ -176,19 +177,23 @@
                 <ul class="text-[11px] text-indigo-900 space-y-2">
                     <li class="flex items-start gap-2">
                         <span class="text-indigo-400 mt-0.5">&#9656;</span>
-                        <a href="https://www.tn.gov.in/go/view/2025-11-22-4866" target="_blank" rel="noopener" class="hover:underline">G.O.(Ms) No.346 - TAPS 2026 Main Order (22.11.2025)</a>
+                        <a href="https://civilengghub.in/wp-content/uploads/2026/01/Pension-TAPS-G.O-1.pdf" target="_blank" rel="noopener" class="hover:underline">TAPS 2026 - Government Order (PDF)</a>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-indigo-400 mt-0.5">&#9656;</span>
-                        <a href="https://www.tn.gov.in/go/view/2025-12-23-4965" target="_blank" rel="noopener" class="hover:underline">G.O.(Ms) No.375 - TAPS Amendment / Clarification (23.12.2025)</a>
+                        <a href="https://www.tn.gov.in/go_view/dept/9" target="_blank" rel="noopener" class="hover:underline">TN Finance Dept - All Government Orders</a>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-indigo-400 mt-0.5">&#9656;</span>
-                        <a href="https://www.ifhrms.tn.gov.in/" target="_blank" rel="noopener" class="hover:underline">IFHRMS Portal - Pay Slip & Service Details</a>
+                        <a href="https://www.karuvoolam.tn.gov.in/" target="_blank" rel="noopener" class="hover:underline">IFHRMS Karuvoolam - Pay Slip & Service Details</a>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-indigo-400 mt-0.5">&#9656;</span>
                         <a href="https://www.pfrda.org.in/" target="_blank" rel="noopener" class="hover:underline">PFRDA - CPS/NPS Balance & Statement</a>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-400 mt-0.5">&#9656;</span>
+                        <a href="https://cps.tn.gov.in/" target="_blank" rel="noopener" class="hover:underline">TN CPS Portal - CPS Account Details</a>
                     </li>
                 </ul>
             </div>
@@ -266,7 +271,17 @@
             document.getElementById('resRetireYear').innerText = retireYear;
             document.getElementById('resLastSalary').innerText = fmtInr(salary);
             document.getElementById('resService').innerText = totalService;
-            document.getElementById('resType').innerText = totalService >= 25 ? "FULL ASSURED" : "PROPORTIONATE";
+            const typeEl = document.getElementById('resType');
+            const hintEl = document.getElementById('resTypeHint');
+            if (totalService >= 25) {
+                typeEl.innerText = "FULL (50%)";
+                typeEl.className = "text-sm font-bold uppercase text-green-600";
+                hintEl.innerText = "25+ ஆண்டு பணி - முழு பென்ஷன்";
+            } else {
+                typeEl.innerText = "PROPORTIONATE";
+                typeEl.className = "text-sm font-bold uppercase text-amber-600";
+                hintEl.innerText = totalService + " ஆண்டு பணி - விகிதாசார பென்ஷன்";
+            }
             document.getElementById('resGratuity').innerText = gratuity;
             document.getElementById('resCorpus').innerText = fmtLg(corpus);
             document.getElementById('resInterest').innerText = fmtInr(interest);
