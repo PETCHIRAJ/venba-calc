@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN Pension Master Calc - Bilingual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap'); 
+        body { font-family: 'Mukta+Malar', sans-serif; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .print-border { border: 2px solid #cbd5e1; border-radius: 12px; padding: 20px; box-shadow: none; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-900 pb-24">
+
+    <header class="bg-indigo-900 text-white p-6 shadow-xl text-center no-print relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-2xl font-black tracking-tight">தமிழக அரசு ஓய்வூதியக் கணக்கீடு</h1>
+            <p class="text-xs text-indigo-200 mt-1 font-medium">TN Pension Master Calc (TAPS 2026)</p>
+        </div>
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-indigo-800 rounded-full opacity-50 z-0"></div>
+    </header>
+
+    <main class="max-w-xl mx-auto mt-6 p-4">
+        
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 no-print">
+            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b pb-2">விவரங்களை உள்ளிடவும் (Enter Details)</h2>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">பிறந்த ஆண்டு (Birth Year)</label>
+                    <div class="relative">
+                        <select id="birthYear" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-lg appearance-none focus:ring-2 focus:ring-indigo-500">
+                            </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">▼</div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">பணியில் சேர்ந்த ஆண்டு (Join Year)</label>
+                    <div class="relative">
+                        <select id="joinYear" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-lg appearance-none focus:ring-2 focus:ring-indigo-500">
+                            </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">▼</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">தற்போதைய ஊதியம் + அகவிலைப்படி (Basic + DA)</label>
+                    <input type="tel" id="salary" value="52298" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-xl font-black text-indigo-900 tracking-wide focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">தற்போதைய CPS சேமிப்பு (Lakhs)</label>
+                    <input type="tel" id="cps" value="22.07" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-xl font-black text-indigo-900 tracking-wide focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+            </div>
+
+            <button onclick="calculate()" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all text-lg flex flex-col items-center justify-center">
+                <span>கணக்கிடு (Calculate)</span>
+            </button>
+        </div>
+
+        <div id="results" class="hidden mt-8 print-border bg-white rounded-3xl shadow-xl p-6 space-y-6 animate-in fade-in duration-500 border-t-8 border-indigo-900">
+            
+            <div class="flex justify-between items-start border-b pb-4">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800">ஓய்வு கால அறிக்கை (Retirement Report)</h2>
+                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Projected for May <span id="resRetireYear" class="text-indigo-600">2042</span></p>
+                </div>
+                <div class="flex gap-2 no-print">
+                    <button onclick="window.print()" class="bg-slate-100 p-2 rounded-lg hover:bg-slate-200" title="Print PDF">🖨️</button>
+                    <button onclick="shareWhatsApp()" class="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200" title="Share">💬</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="bg-slate-50 p-3 rounded-2xl">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">இறுதிச் சம்பளம் (Last Salary)</span>
+                    <span class="text-lg font-black text-slate-800">₹<span id="resLastSalary"></span></span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-2xl">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">பணிக்காலம் (Service)</span>
+                    <span class="text-lg font-black text-slate-800"><span id="resService"></span> ஆண்டுகள்</span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-2xl">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">வகை (Type)</span>
+                    <span class="text-sm font-bold text-indigo-600 uppercase" id="resType">Full</span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-2xl">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">கிராஜுவிட்டி (Gratuity)</span>
+                    <span class="text-lg font-black text-slate-800">₹<span id="resGratuity"></span> L</span>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                
+                <div class="relative bg-white border-2 border-red-100 rounded-2xl p-5 shadow-sm">
+                    <div class="absolute top-0 right-0 bg-red-100 text-red-700 text-[9px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-widest">CPS முறை</div>
+                    <h3 class="font-bold text-slate-700 text-sm uppercase">விருப்பம் A: மொத்தப் பணம் (Lump Sum)</h3>
+                    
+                    <div class="mt-2 flex justify-between items-baseline">
+                        <span class="text-3xl font-black text-red-600 tracking-tight">₹<span id="resCorpus"></span></span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Cash</span>
+                    </div>
+                    
+                    <div class="mt-3 pt-3 border-t border-red-50 flex justify-between text-xs text-slate-500">
+                        <span>வட்டி வருமானம் (Interest @ 7%):</span>
+                        <span class="font-bold text-slate-700">₹<span id="resInterest"></span></span>
+                    </div>
+                </div>
+
+                <div class="relative bg-white border-2 border-green-100 rounded-2xl p-5 shadow-md ring-1 ring-green-50">
+                    <div class="absolute top-0 right-0 bg-green-100 text-green-800 text-[9px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-widest">TAPS முறை</div>
+                    <h3 class="font-bold text-slate-700 text-sm uppercase">விருப்பம் B: மாத பென்ஷன் (Pension)</h3>
+                    
+                    <div class="mt-2 flex justify-between items-baseline">
+                        <span class="text-3xl font-black text-green-600 tracking-tight">₹<span id="resPension"></span></span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Per Month</span>
+                    </div>
+
+                    <div class="mt-3 pt-3 border-t border-green-50 text-[10px] text-green-700 font-medium flex gap-2 items-center">
+                        <span class="bg-green-100 px-1.5 py-0.5 rounded text-green-800">சிறப்பு:</span>
+                        <span>DA உயர்வு + வாழ்நாள் பென்ஷன் உண்டு.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 text-slate-300 rounded-xl p-5 mt-6 border border-slate-700">
+                <h4 class="text-xs font-bold text-white uppercase mb-3 flex items-center gap-2">
+                    📊 கணக்கீட்டின் அடிப்படை (Assumptions)
+                </h4>
+                <div class="grid grid-cols-2 gap-y-3 gap-x-8 text-[11px]">
+                    <div>
+                        <span class="block text-slate-500 uppercase text-[9px]">ஊதிய உயர்வு (Increment)</span>
+                        <span class="font-bold text-white">3% (Fixed)</span>
+                    </div>
+                    <div>
+                        <span class="block text-slate-500 uppercase text-[9px]">விலைவாசி உயர்வு (DA Hike)</span>
+                        <span class="font-bold text-white">5% (Avg / Year)</span>
+                    </div>
+                    <div>
+                        <span class="block text-slate-500 uppercase text-[9px]">ஊதியக் குழு (Pay Comm)</span>
+                        <span class="font-bold text-white">20% (Every 10 Yrs)</span>
+                    </div>
+                    <div>
+                        <span class="block text-slate-500 uppercase text-[9px]">வட்டி விகிதம் (CPS Int)</span>
+                        <span class="font-bold text-white">7.5% (Yearly)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                <h4 class="text-xs font-black text-amber-800 uppercase mb-2">⚠️ சரிபார்க்க வேண்டியவை (Checklist):</h4>
+                <ul class="text-[10px] text-amber-900 space-y-1.5 list-disc pl-3">
+                    <li><strong>SR புக்:</strong> பணியில் சேர்ந்த தேதி மற்றும் பணி வரன்முறை (Regularization) சரியாக உள்ளதா?</li>
+                    <li><strong>CPS போர்ட்டல்:</strong> விடுபட்ட மாதத் தொகை (Missing Credits) ஏதும் உள்ளதா?</li>
+                    <li><strong>வாரிசுதாரர்:</strong> Gratuity மற்றும் Family Pension-க்கு வாரிசுதாரர் பெயர் சரியாக உள்ளதா?</li>
+                </ul>
+            </div>
+
+            <p class="text-[9px] text-center text-slate-400 font-medium uppercase tracking-widest">Venba Apps Logic Engine (v2.0)</p>
+        </div>
+    </main>
+
+    <script>
+        // Populate Dropdowns
+        window.onload = function() {
+            const birthSelect = document.getElementById('birthYear');
+            const joinSelect = document.getElementById('joinYear');
+            const currentYear = new Date().getFullYear();
+
+            for (let i = 1960; i <= 2010; i++) {
+                let opt = document.createElement('option');
+                opt.value = i; opt.innerHTML = i;
+                if(i === 1982) opt.selected = true;
+                birthSelect.appendChild(opt);
+            }
+
+            for (let i = 1980; i <= currentYear; i++) {
+                let opt = document.createElement('option');
+                opt.value = i; opt.innerHTML = i;
+                if(i === 2013) opt.selected = true;
+                joinSelect.appendChild(opt);
+            }
+        };
+
+        function calculate() {
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const joinYear = parseInt(document.getElementById('joinYear').value);
+            const salaryInput = parseFloat(document.getElementById('salary').value);
+            const cpsInput = parseFloat(document.getElementById('cps').value);
+
+            const retireYear = birthYear + 60;
+            const currentYear = new Date().getFullYear();
+            const yearsLeft = Math.max(0, retireYear - currentYear);
+            const totalService = retireYear - joinYear;
+            
+            let salary = salaryInput;
+            let corpus = cpsInput * 100000;
+
+            for (let i = 0; i < yearsLeft; i++) {
+                let yr = currentYear + i;
+                corpus = (corpus * 1.075) + (salary * 12 * 0.20);
+                salary = salary * 1.08;
+                if (yr >= 2036 && (yr - 2036) % 10 === 0) salary = salary * 1.20; 
+            }
+
+            let pFactor = totalService >= 25 ? 0.50 : (totalService / 25) * 0.50;
+            const pension = salary * pFactor;
+            const gratuity = totalService >= 25 ? 25 : Math.round((totalService / 25) * 20);
+            const interest = (corpus * 0.07) / 12;
+
+            const fmtInr = (n) => Math.round(n).toLocaleString('en-IN');
+            const fmtLg = (n) => (n >= 10000000) ? (n/10000000).toFixed(2) + ' Cr' : (n/100000).toFixed(2) + ' L';
+
+            document.getElementById('resRetireYear').innerText = retireYear;
+            document.getElementById('resLastSalary').innerText = fmtInr(salary);
+            document.getElementById('resService').innerText = totalService;
+            document.getElementById('resType').innerText = totalService >= 25 ? "FULL ASSURED" : "PROPORTIONATE";
+            document.getElementById('resGratuity').innerText = gratuity;
+            document.getElementById('resCorpus').innerText = fmtLg(corpus);
+            document.getElementById('resInterest').innerText = fmtInr(interest);
+            document.getElementById('resPension').innerText = fmtInr(pension);
+
+            document.getElementById('results').classList.remove('hidden');
+            setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth' }), 100);
+        }
+
+        function shareWhatsApp() {
+            const p = document.getElementById('resPension').innerText;
+            const c = document.getElementById('resCorpus').innerText;
+            const text = `I checked my TN Govt Pension!%0A💰 CPS: ₹${c}%0A🏛️ Pension: ₹${p}/mo%0ACheck yours: blog.venba.dev`;
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+    </script>
+</body>
+</html>
